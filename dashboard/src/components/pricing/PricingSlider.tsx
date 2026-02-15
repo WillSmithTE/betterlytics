@@ -22,6 +22,8 @@ export function PricingSlider({
   const t = useTranslations('pricingSlider');
   const locale = useLocale();
 
+  const isUnlimited = currentRange.value > 10_000_000;
+
   return (
     <div className={className}>
       <div className='mb-4 flex h-16 flex-col items-center justify-end'>
@@ -31,7 +33,7 @@ export function PricingSlider({
           value={currentRange.value}
           locales={locale}
           format={{ notation: 'compact' }}
-          suffix={currentRange.value > 10_000_000 ? '+' : undefined}
+          suffix={isUnlimited ? '+' : undefined}
           willChange
         />
       </div>
