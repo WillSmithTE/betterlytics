@@ -10,6 +10,7 @@ import { useTimeRangeContext } from '@/contexts/TimeRangeContextProvider';
 import { useQueryFiltersContext } from '@/contexts/QueryFiltersContextProvider';
 
 import { formatNumber } from '@/utils/formatters';
+import type { SupportedLanguages } from '@/constants/i18n';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 import { LiveIndicator } from '@/components/live-indicator';
@@ -49,7 +50,7 @@ const LoadingMoreIndicator = ({ t }: { t: EventLogTranslation }) => (
   </div>
 );
 
-const createShowingText = (allEvents: EventLogEntry[], totalCount: number, t: EventLogTranslation, locale: string): string => {
+const createShowingText = (allEvents: EventLogEntry[], totalCount: number, t: EventLogTranslation, locale: SupportedLanguages): string => {
   if (totalCount === 0) {
     return t('noEvents');
   }

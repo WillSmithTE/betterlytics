@@ -3,6 +3,7 @@ import { GranularityRangeValues, getMinuteStep } from './granularityRanges';
 import { utcDay, utcHour, utcMinute, utcWeek, utcMonth } from 'd3-time';
 import { formatNumber } from './formatters';
 import { formatWeekRange } from './dateFormatters';
+import type { SupportedLanguages } from '@/constants/i18n';
 
 export interface TrendInfo {
   icon: typeof ChevronUp | typeof ChevronDown | typeof Minus;
@@ -31,7 +32,7 @@ export function formatDifference(
   hasComparison: boolean,
   formatter?: (value: number) => string,
   includePreviousNumber: boolean = true,
-  locale?: string,
+  locale?: SupportedLanguages,
 ): string | null {
   if (!hasComparison || previous === 0) return null;
 
@@ -62,7 +63,7 @@ export function formatDifference(
 export function defaultDateLabelFormatter(
   date: string | number,
   granularity?: GranularityRangeValues,
-  locale?: string,
+  locale?: SupportedLanguages,
 ) {
   const d = typeof date === 'string' ? new Date(date) : new Date(date);
 
@@ -98,7 +99,7 @@ export function defaultDateLabelFormatter(
   }).format(d);
 }
 
-export function granularityDateFormatter(granularity?: GranularityRangeValues, locale?: string) {
+export function granularityDateFormatter(granularity?: GranularityRangeValues, locale?: SupportedLanguages) {
   // Month granularity
   if (granularity === 'month') {
     return (date: Date) =>

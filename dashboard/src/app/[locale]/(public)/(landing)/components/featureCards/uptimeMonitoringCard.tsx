@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Shield, RefreshCcw, Mail, Bell } from 'lucide-react';
 import { formatPercentage } from '@/utils/formatters';
 import { getLocale, getTranslations } from 'next-intl/server';
+import type { SupportedLanguages } from '@/constants/i18n';
 
 export default async function UptimeMonitoringCard() {
   const t = await getTranslations('public.landing.cards.uptimeMonitoring');
@@ -27,7 +28,7 @@ export default async function UptimeMonitoringCard() {
 }
 
 type IllustrationProps = {
-  locale: string;
+  locale: SupportedLanguages;
   alertDown: string;
   alertSent: string;
   incidentDetected: string;
@@ -163,7 +164,7 @@ type Monitor = {
   isDown: boolean;
 };
 
-function MonitorRow({ monitor, locale }: { monitor: Monitor; locale: string }) {
+function MonitorRow({ monitor, locale }: { monitor: Monitor; locale: SupportedLanguages }) {
   const getStatusColor = (value: number, isLast: boolean) => {
     if (value < 0) return `bg-red-500 ${isLast && monitor.isDown ? 'status-pill-alert' : ''}`;
     if (value < 1) return 'bg-amber-500';

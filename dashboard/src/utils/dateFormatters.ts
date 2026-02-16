@@ -153,19 +153,6 @@ export function splitCompactFromMilliseconds(ms: number): {
   return { value: ms / 1000, format: { style: 'unit', unit: 'second', unitDisplay: 'narrow' } };
 }
 
-/**
- * Splits milliseconds into a value and an Intl-compatible unit for animation purposes.
- * < 1000ms → milliseconds (rounded), >= 1000ms → seconds (with decimal)
- */
-export function splitCompactFromMilliseconds(ms: number): {
-  value: number;
-  format: { style: 'unit'; unit: 'millisecond' | 'second'; unitDisplay: 'narrow' };
-} {
-  const rounded = Math.round(ms);
-  if (rounded < 1000) return { value: rounded, format: { style: 'unit', unit: 'millisecond', unitDisplay: 'narrow' } };
-  return { value: ms / 1000, format: { style: 'unit', unit: 'second', unitDisplay: 'narrow' } };
-}
-
 /*
  * Format a timestamp in the format of mm:ss
  */
@@ -216,7 +203,7 @@ export function formatTimeLeft(daysLeft: number | null): { value: string; unit: 
 // Formats a date/time to a locale-aware human-readable string
 export function formatLocalDateTime(
   date: string | Date | undefined | null,
-  locale?: string,
+  locale?: SupportedLanguages,
   options?: Intl.DateTimeFormatOptions,
 ): string | undefined {
   if (!date) return undefined;
@@ -226,7 +213,7 @@ export function formatLocalDateTime(
 }
 
 // Formats a date relative to now (e.g., "3 days ago"), localized via Intl.RelativeTimeFormat
-export function formatRelativeTimeFromNow(date: string | Date, locale?: string): string {
+export function formatRelativeTimeFromNow(date: string | Date, locale?: SupportedLanguages): string {
   const d = typeof date === 'string' ? new Date(date) : date;
   if (Number.isNaN(d.getTime())) return '';
 
@@ -256,7 +243,7 @@ export function formatRelativeTimeFromNow(date: string | Date, locale?: string):
  * Formats a week as a date range like "Jan 6 – 12" or "Dec 30 – Jan 5"
  * Optionally includes the year: "Jan 6 – 12, 2026"
  */
-export function formatWeekRange(date: Date, locale?: string, includeYear = false): string {
+export function formatWeekRange(date: Date, locale?: SupportedLanguages, includeYear = false): string {
   const weekStart = new Date(date);
   const weekEnd = new Date(date);
   weekEnd.setDate(weekEnd.getDate() + 6);

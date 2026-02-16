@@ -1,3 +1,5 @@
+import type { SupportedLanguages } from '@/constants/i18n';
+
 /**
  * Format a number using locale-aware compact notation (e.g., 1.5K, 1,5 t).
  * Options mirror Intl.NumberFormatOptions — sensible defaults are applied first,
@@ -5,7 +7,7 @@
  */
 export function formatNumber(
   num: number,
-  locale?: string,
+  locale?: SupportedLanguages,
   opts?: Intl.NumberFormatOptions,
 ): string {
   if (num == null) return '-';
@@ -22,7 +24,7 @@ export function formatNumber(
  */
 export function formatPercentage(
   num: number,
-  locale?: string,
+  locale?: SupportedLanguages,
   opts?: Intl.NumberFormatOptions & { trimHundred?: boolean },
 ): string {
   const { trimHundred, ...intlOpts } = opts ?? {};
@@ -83,7 +85,7 @@ export function computeDowntimeFromUptimeDays(uptimePercent: number, days: numbe
   return computeDowntimeFromUptimeHours(uptimePercent, days * 24);
 }
 
-export function formatTimeFromNow(date: Date, locale: string): string {
+export function formatTimeFromNow(date: Date, locale: SupportedLanguages): string {
   const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
 
   const diffMs = date.getTime() - Date.now();
