@@ -2216,6 +2216,10 @@
       "dashboard": {
         "initializing": "Initialiserer dashboard",
         "loadingSettings": "Indlæser dine dashboard-indstillinger..."
+      },
+      "geography": {
+        "title": "Initialiserer verdenskort",
+        "description": "Forbereder en geografisk visualisering af besøgsdata..."
       }
     },
     "devices": {
@@ -2541,7 +2545,6 @@
     },
     "geography": {
       "noData": "Ingen geografiske data tilgængelige for den valgte periode",
-      "loading": "Indlæser kort...",
       "visitors": "Besøgende"
     },
     "userJourney": {
