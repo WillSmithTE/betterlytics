@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { formatPercentage } from '@/utils/formatters';
 import { TrendIndicator } from './TrendIndicator';
-import { SupportedLanguages } from '@/constants/i18n';
+import type { SupportedLanguages } from '@/constants/i18n';
 
 type TrendPercentageProps = {
   percentage?: number | null;

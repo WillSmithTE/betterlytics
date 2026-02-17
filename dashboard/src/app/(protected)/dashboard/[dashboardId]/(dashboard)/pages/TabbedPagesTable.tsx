@@ -51,20 +51,20 @@ export default function TabbedPagesTable({ allPagesData, entryPagesData, exitPag
       {
         accessorKey: 'visitors',
         header: t('visitors'),
-        cell: ({ row }) => <TableCompareCell row={row.original} dataKey='visitors' formatter={(value) => formatNumber(value, locale)} />,
+        cell: ({ row }) => <TableCompareCell row={row.original} dataKey='visitors' formatter={formatNumber} />,
         accessorFn: (row) => row.current.visitors,
       },
       {
         accessorKey: 'pageviews',
         header: t('pageviews'),
-        cell: ({ row }) => <TableCompareCell row={row.original} dataKey='pageviews' formatter={(value) => formatNumber(value, locale)} />,
+        cell: ({ row }) => <TableCompareCell row={row.original} dataKey='pageviews' formatter={formatNumber} />,
         accessorFn: (row) => row.current.pageviews,
       },
       {
         accessorKey: 'bounceRate',
         header: t('bounceRate'),
         cell: ({ row }) => (
-          <TableCompareCell row={row.original} dataKey='bounceRate' formatter={(value) => formatPercentage(value, locale)} allowNullish />
+          <TableCompareCell row={row.original} dataKey='bounceRate' formatter={formatPercentage} allowNullish />
         ),
         accessorFn: (row) => row.current.bounceRate,
       },
@@ -72,7 +72,7 @@ export default function TabbedPagesTable({ allPagesData, entryPagesData, exitPag
         accessorKey: 'avgTime',
         header: t('avgTime'),
         cell: ({ row }) => (
-          <TableCompareCell row={row.original} dataKey='avgTime' formatter={(val) => formatDuration(val, locale)} allowNullish />
+          <TableCompareCell row={row.original} dataKey='avgTime' formatter={formatDuration} allowNullish />
         ),
         accessorFn: (row) => row.current.avgTime,
       },
@@ -83,7 +83,7 @@ export default function TabbedPagesTable({ allPagesData, entryPagesData, exitPag
           <TableCompareCell
             row={row.original}
             dataKey='avgScrollDepth'
-            formatter={(value) => formatPercentage(value, locale)}
+            formatter={formatPercentage}
             allowNullish
           />
         ),
@@ -107,7 +107,7 @@ export default function TabbedPagesTable({ allPagesData, entryPagesData, exitPag
               current={row.original.current.entryRate ?? 0}
               compare={row.original.compare?.entryRate}
               percentage={row.original.change?.entryRate}
-              formatter={(value) => formatPercentage(value, locale)}
+              formatter={formatPercentage}
             />
           </div>
         ),
@@ -123,7 +123,7 @@ export default function TabbedPagesTable({ allPagesData, entryPagesData, exitPag
               current={row.original.current.exitRate ?? 0}
               compare={row.original.compare?.exitRate}
               percentage={row.original.change?.exitRate}
-              formatter={(value) => formatPercentage(value, locale)}
+              formatter={formatPercentage}
             />
           </div>
         ),

@@ -88,7 +88,7 @@ export default function SummaryAndChartSection({ data }: SummaryAndChartSectionP
     },
     {
       title: t('bounceRate'),
-      value: summary.bounceRate !== undefined ? formatPercentage(summary.bounceRate, locale) : formatPercentage(0, locale),
+      value: formatPercentage(summary.bounceRate ?? 0, locale),
       rawChartData: summary.bounceRateChartData,
       valueField: 'bounce_rate',
       comparePercentage: summary.compareValues.bounceRate,

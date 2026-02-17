@@ -7,7 +7,7 @@ import { BrowserIcon } from '@/components/icons';
 import type { ToDataTable } from '@/presenters/toDataTable';
 import { TableCompareCell } from '../TableCompareCell';
 import { formatPercentage } from '@/utils/formatters';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { useFilterClick } from '@/hooks/use-filter-click';
 
@@ -18,7 +18,6 @@ interface BrowserTableProps {
 export default function BrowserTable({ data }: BrowserTableProps) {
   const tCols = useTranslations('components.devices.tables.columns');
   const tFilters = useTranslations('components.filters');
-  const locale = useLocale();
   const { makeFilterClick } = useFilterClick({ behavior: 'replace-same-column' });
   const columns: ColumnDef<ToDataTable<'browser', BrowserStats>>[] = [
     {
@@ -47,7 +46,7 @@ export default function BrowserTable({ data }: BrowserTableProps) {
     {
       accessorKey: 'percentage',
       header: tCols('percentage'),
-      cell: ({ row }) => <TableCompareCell row={row.original} dataKey='percentage' formatter={(value) => formatPercentage(value, locale)} />,
+      cell: ({ row }) => <TableCompareCell row={row.original} dataKey='percentage' formatter={formatPercentage} />,
       accessorFn: (row) => row.current.percentage,
     },
   ];

@@ -1,12 +1,13 @@
 import { Minus } from 'lucide-react';
 import { TrendPercentage } from './TrendPercentage';
 import { useLocale } from 'next-intl';
+import type { SupportedLanguages } from '@/constants/i18n';
 
 type TableTrendIndicatorProps = {
   current: number;
   compare?: number;
   percentage?: number;
-  formatter?: (value: number) => string;
+  formatter?: (value: number, locale: SupportedLanguages) => string;
   allowNullish?: boolean;
 };
 
@@ -18,7 +19,7 @@ export function TableTrendIndicator({
   allowNullish,
 }: TableTrendIndicatorProps) {
   const locale = useLocale();
-  const formatter = formatterProp ?? ((val: number) => val.toLocaleString(locale));
+  const formatter = (val: number) => formatterProp ? formatterProp(val, locale) : val.toLocaleString(locale);
 
   if (percentage === undefined) {
     return null;

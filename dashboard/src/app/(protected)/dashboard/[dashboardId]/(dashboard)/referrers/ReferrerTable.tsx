@@ -108,7 +108,7 @@ export default function ReferrerTable({ data = [] }: ReferrerTableProps) {
     {
       accessorKey: 'visits',
       header: t('columns.visits'),
-      cell: ({ row }) => <TableCompareCell row={row.original} dataKey='visits' formatter={(value) => formatNumber(value, locale)} />,
+      cell: ({ row }) => <TableCompareCell row={row.original} dataKey='visits' formatter={formatNumber} />,
       accessorFn: (row) => row.current.visits,
     },
     {
@@ -127,7 +127,7 @@ export default function ReferrerTable({ data = [] }: ReferrerTableProps) {
       accessorKey: 'bounce_rate',
       header: t('columns.bounceRate'),
       cell: ({ row }) => (
-        <TableCompareCell row={row.original} dataKey='bounce_rate' formatter={(value) => formatPercentage(value, locale)} />
+        <TableCompareCell row={row.original} dataKey='bounce_rate' formatter={formatPercentage} />
       ),
       accessorFn: (row) => row.current.bounce_rate,
     },
@@ -135,7 +135,7 @@ export default function ReferrerTable({ data = [] }: ReferrerTableProps) {
       accessorKey: 'avg_visit_duration',
       header: t('columns.avgVisitDuration'),
       cell: ({ row }) => (
-        <TableCompareCell row={row.original} dataKey='avg_visit_duration' formatter={(val) => formatDuration(val, locale)} />
+        <TableCompareCell row={row.original} dataKey='avg_visit_duration' formatter={formatDuration} />
       ),
       accessorFn: (row) => row.current.avg_visit_duration,
     },

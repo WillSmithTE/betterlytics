@@ -62,7 +62,7 @@ export default function OperatingSystemTable({ data }: OperatingSystemTableProps
             current={row.original.current.percentage}
             compare={row.original.compare?.percentage}
             percentage={row.original.change?.percentage}
-            formatter={(val) => formatPercentage(val, locale)}
+            formatter={formatPercentage}
           />
         </div>
       ),

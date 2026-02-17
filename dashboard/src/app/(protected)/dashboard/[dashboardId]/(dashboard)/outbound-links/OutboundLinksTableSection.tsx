@@ -1,7 +1,7 @@
 'use client';
 
 import { use, useMemo } from 'react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { fetchOutboundLinksAnalyticsAction } from '@/app/actions/analytics/outboundLinks.actions';
 import { DataTable } from '@/components/DataTable';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,7 +21,6 @@ export default function OutboundLinksTableSection({
   outboundLinksAnalyticsPromise,
 }: OutboundLinksTableSectionProps) {
   const outboundLinksData = use(outboundLinksAnalyticsPromise);
-  const locale = useLocale();
   const t = useTranslations('components.outboundLinks.table');
 
   const columns: ColumnDef<TableOutboundLinkRow>[] = useMemo(
@@ -47,7 +46,7 @@ export default function OutboundLinksTableSection({
       {
         accessorKey: 'clicks',
         header: t('uniqueClicks'),
-        cell: ({ row }) => <TableCompareCell row={row.original} dataKey='clicks' formatter={(value) => formatNumber(value, locale)} />,
+        cell: ({ row }) => <TableCompareCell row={row.original} dataKey='clicks' formatter={formatNumber} />,
         accessorFn: (row) => row.current.clicks,
       },
       {
@@ -62,12 +61,12 @@ export default function OutboundLinksTableSection({
         accessorKey: 'source_url_count',
         header: t('sourcePages'),
         cell: ({ row }) => (
-          <TableCompareCell row={row.original} dataKey='source_url_count' formatter={(value) => formatNumber(value, locale)} />
+          <TableCompareCell row={row.original} dataKey='source_url_count' formatter={formatNumber} />
         ),
         accessorFn: (row) => row.current.source_url_count,
       },
     ],
-    [t, locale],
+    [t],
   );
 
   return (
