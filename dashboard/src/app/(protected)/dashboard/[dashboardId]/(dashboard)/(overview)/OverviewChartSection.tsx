@@ -9,7 +9,8 @@ import {
   type fetchUniqueVisitorsAction,
 } from '@/app/actions/index.actions';
 import { useTimeRangeContext } from '@/contexts/TimeRangeContextProvider';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
+import type { SupportedLanguages } from '@/constants/i18n';
 import { type SummaryCardData } from '@/components/dashboard/SummaryCardsSection';
 import InlineMetricsHeader from '@/components/dashboard/InlineMetricsHeader';
 import { formatPercentage } from '@/utils/formatters';
@@ -21,7 +22,7 @@ interface MetricConfig {
   title: string;
   valueField: string;
   color: string;
-  formatValue?: (value: number) => string;
+  formatValue?: (value: number, locale: SupportedLanguages) => string;
 }
 
 export default function OverviewChartSection({
@@ -38,7 +39,6 @@ export default function OverviewChartSection({
   cards?: SummaryCardData[];
 }) {
   const t = useTranslations('dashboard');
-  const locale = useLocale();
 
   const metricConfigs: Record<ActiveMetric, MetricConfig> = useMemo(
     () => ({
@@ -66,16 +66,16 @@ export default function OverviewChartSection({
         title: t('metrics.bounceRate'),
         valueField: 'bounce_rate',
         color: 'var(--chart-1)',
-        formatValue: (value: number) => formatPercentage(value, locale),
+        formatValue: formatPercentage,
       },
       avgDuration: {
         title: t('metrics.avgVisitDuration'),
         valueField: 'avg_visit_duration',
         color: 'var(--chart-1)',
-        formatValue: (value: number) => formatDuration(value, locale),
+        formatValue: formatDuration,
       },
     }),
-    [t, locale],
+    [t],
   );
 
   const { chartData, comparisonMap, incomplete, incompleteStart } = useMemo(() => {

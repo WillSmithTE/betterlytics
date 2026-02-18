@@ -64,7 +64,7 @@ export default function InteractiveWebVitalsChartSection({
         title={undefined}
         data={chartData}
         granularity={granularity}
-        formatValue={(v) => formatCWV(active, Number(v), locale)}
+        formatValue={(v, locale) => formatCWV(active, Number(v), locale)}
         yDomain={active === 'CLS' ? [0, (dataMax: number) => Math.max(1, Number(dataMax || 0))] : undefined}
         series={SERIES_DEFS}
         yReferenceAreas={yReferenceAreas}
