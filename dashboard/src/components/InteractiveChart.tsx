@@ -62,7 +62,7 @@ interface InteractiveChartProps {
   incomplete?: ChartDataPoint[];
   incompleteStart?: ChartDataPoint[];
   color: string;
-  formatValue?: (value: number, locale: SupportedLanguages) => string;
+  formatValue?: (value: number, locale?: SupportedLanguages) => string;
   granularity?: GranularityRangeValues;
   comparisonMap?: ComparisonMapping[];
   headerContent?: React.ReactNode;

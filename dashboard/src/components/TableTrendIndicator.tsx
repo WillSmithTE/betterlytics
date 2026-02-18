@@ -7,7 +7,7 @@ type TableTrendIndicatorProps = {
   current: number;
   compare?: number;
   percentage?: number;
-  formatter?: (value: number, locale: SupportedLanguages) => string;
+  formatter?: (value: number, locale?: SupportedLanguages) => string;
   allowNullish?: boolean;
 };
 

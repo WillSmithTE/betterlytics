@@ -95,7 +95,7 @@ export default function DeviceUsageTrendChart({
                   label={props.label}
                   comparisonMap={comparisonMap}
                   granularity={granularity}
-                  formatter={(value) => formatNumber(value, locale)}
+                  formatter={formatNumber}
                 />
               )}
             />

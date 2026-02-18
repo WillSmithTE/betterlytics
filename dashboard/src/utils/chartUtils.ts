@@ -30,7 +30,7 @@ export function formatDifference(
   current: number,
   previous: number,
   hasComparison: boolean,
-  formatter?: (value: number) => string,
+  formatter?: (value: number, locale?: SupportedLanguages) => string,
   includePreviousNumber: boolean = true,
   locale?: SupportedLanguages,
 ): string | null {
@@ -40,7 +40,7 @@ export function formatDifference(
   if (diff === 0) return null;
 
   const sign = diff > 0 ? '+' : '';
-  const formattedDiff = formatter ? formatter(diff) : formatNumber(diff, locale);
+  const formattedDiff = formatter ? formatter(diff, locale) : formatNumber(diff, locale);
 
   const percentageValue = diff / previous;
   const percentage = new Intl.NumberFormat(locale, {

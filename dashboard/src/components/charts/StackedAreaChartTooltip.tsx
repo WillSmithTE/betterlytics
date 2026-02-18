@@ -7,6 +7,7 @@ import { type ComparisonMapping } from '@/types/charts';
 import { type GranularityRangeValues } from '@/utils/granularityRanges';
 import { Separator } from '@/components/ui/separator';
 import { useLocale } from 'next-intl';
+import type { SupportedLanguages } from '@/constants/i18n';
 
 interface PayloadEntry {
   value: number;
@@ -19,7 +20,7 @@ interface StackedAreaChartTooltipProps {
   active?: boolean;
   payload?: any;
   label?: string | number;
-  formatter?: (value: number) => string;
+  formatter?: (value: number, locale?: SupportedLanguages) => string;
   labelFormatter?: (date: string | number, granularity?: GranularityRangeValues) => string;
   comparisonMap?: ComparisonMapping[];
   granularity?: GranularityRangeValues;
@@ -35,7 +36,7 @@ export function StackedAreaChartTooltip({
   granularity,
 }: StackedAreaChartTooltipProps) {
   const locale = useLocale();
-  const formatter = formatterProp ?? ((value: number) => value.toLocaleString(locale));
+  const formatter = formatterProp ?? ((value: number, loc?: SupportedLanguages) => value.toLocaleString(loc));
 
   if (!active || !payload || !payload.length || !label) {
     return null;
@@ -105,7 +106,7 @@ export function StackedAreaChartTooltip({
                       )}
                     </>
                   )}
-                  <span className='text-popover-foreground text-sm font-medium'>{formatter(currentValue)}</span>
+                  <span className='text-popover-foreground text-sm font-medium'>{formatter(currentValue, locale)}</span>
                 </div>
               </div>
             </div>
@@ -130,7 +131,7 @@ export function StackedAreaChartTooltip({
                 )}
               </>
             )}
-            <span className='text-popover-foreground text-sm font-medium'>{formatter(currentTotal)}</span>
+            <span className='text-popover-foreground text-sm font-medium'>{formatter(currentTotal, locale)}</span>
           </div>
         </div>
       </div>

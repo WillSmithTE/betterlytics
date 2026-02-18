@@ -12,7 +12,7 @@ type PresetedData<K extends string> = {
 type TableCompareCellProps<K extends string> = {
   row: PresetedData<K>;
   dataKey: K;
-  formatter?: (value: number, locale: SupportedLanguages) => string;
+  formatter?: (value: number, locale?: SupportedLanguages) => string;
   allowNullish?: boolean;
 };
 

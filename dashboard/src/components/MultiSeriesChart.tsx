@@ -56,7 +56,7 @@ interface MultiSeriesChartProps {
   title: React.ReactNode;
   data: ChartDataPoint[];
   granularity?: GranularityRangeValues;
-  formatValue?: (value: number, locale: SupportedLanguages) => string;
+  formatValue?: (value: number, locale?: SupportedLanguages) => string;
   series: ReadonlyArray<MultiSeriesConfig>;
   referenceAreas?: Array<ReferenceAreaConfig>;
   yReferenceAreas?: Array<YReferenceAreaConfig>;

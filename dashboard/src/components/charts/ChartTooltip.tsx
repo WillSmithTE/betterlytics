@@ -5,13 +5,14 @@ import { getTrendInfo, formatDifference } from '@/utils/chartUtils';
 import { type ComparisonMapping } from '@/types/charts';
 import { formatNumber } from '@/utils/formatters';
 import { useLocale } from 'next-intl';
+import type { SupportedLanguages } from '@/constants/i18n';
 
 interface ChartTooltipProps {
   payload?: {
     value: number;
     payload: { date: string | number; name?: string; label?: string; color?: string; value: number[] };
   }[];
-  formatter?: (value: any) => string;
+  formatter?: (value: number, locale?: SupportedLanguages) => string;
   labelFormatter: (date: any) => string;
   active?: boolean;
   label?: Date;
@@ -75,7 +76,7 @@ export function ChartTooltip({
             <span className='text-popover-foreground text-sm'>{labelFormatter(name)}</span>
           </div>
           <div className='text-popover-foreground text-sm font-medium'>
-            {formatter ? formatter(value) : formatNumber(value, locale)}
+            {formatter ? formatter(value, locale) : formatNumber(value, locale)}
           </div>
         </div>
 
@@ -86,7 +87,7 @@ export function ChartTooltip({
               <span className='text-popover-foreground/60 text-sm'>{previousDateLabel}</span>
             </div>
             <div className='text-popover-foreground/60 text-sm'>
-              {formatter ? formatter(previousValue as number) : formatNumber(previousValue as number, locale)}
+              {formatter ? formatter(previousValue as number, locale) : formatNumber(previousValue as number, locale)}
             </div>
           </div>
         )}

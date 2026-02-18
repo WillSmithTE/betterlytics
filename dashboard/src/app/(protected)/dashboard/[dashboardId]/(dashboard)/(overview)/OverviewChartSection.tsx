@@ -22,7 +22,7 @@ interface MetricConfig {
   title: string;
   valueField: string;
   color: string;
-  formatValue?: (value: number, locale: SupportedLanguages) => string;
+  formatValue?: (value: number, locale?: SupportedLanguages) => string;
 }
 
 export default function OverviewChartSection({

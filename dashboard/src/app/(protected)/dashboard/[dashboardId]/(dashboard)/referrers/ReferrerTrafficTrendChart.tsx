@@ -75,7 +75,7 @@ export default function ReferrerTrafficTrendChart({
                 label={props.label}
                 comparisonMap={comparisonMap}
                 granularity={granularity}
-                formatter={(value: number) => `${formatNumber(value, locale)} visitors`}
+                formatter={(value, locale) => `${formatNumber(value, locale)} visitors`}
               />
             )}
           />
