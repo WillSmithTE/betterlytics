@@ -22,6 +22,8 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 import type { Theme } from '@prisma/client';
+import { useSession } from 'next-auth/react';
+import { updateUserAction } from '@/app/actions/account/userSettings.action';
 
 interface UserSettingsDialogProps {
   open: boolean;
@@ -118,6 +120,7 @@ function UserSettingsDialogContent({
   const [originalTheme] = useState<Theme | undefined>(settings.theme);
   const { isFeatureFlagEnabled } = useClientFeatureFlags();
   const router = useRouter();
+  const { data: session } = useSession();
   const tTabs = useTranslations('components.userSettings.tabs');
   const tDialog = useTranslations('components.userSettings.dialog');
 
@@ -127,7 +130,7 @@ function UserSettingsDialogContent({
         id: 'profile',
         label: tTabs('profile'),
         icon: User,
-        component: UserProfileSettings,
+        component: UserProfileSettings as unknown as UserSettingsTabConfig['component'],
       },
       {
         id: 'preferences',
@@ -168,29 +171,47 @@ function UserSettingsDialogContent({
   const availableTabs = USER_SETTINGS_TABS.filter((tab) => !tab.disabled);
   const [activeTab, setActiveTab] = useState(availableTabs[0].id);
   const [formData, setFormData] = useState<UserSettingsUpdate>({ ...settings });
+  const [profileData, setProfileData] = useState<{ name?: string }>({
+    name: session?.user?.name || '',
+  });
   const { refreshSession } = useSessionRefresh();
   const isFormChanged = useIsChanged(formData, settings);
+  const isProfileChanged = useIsChanged(profileData, { name: session?.user?.name || '' });
+  const hasAnyChanges = isFormChanged || isProfileChanged;
 
   useEffect(() => {
     if (open) {
       setFormData({ ...settings });
+      setProfileData({ name: session?.user?.name || '' });
     }
-  }, [settings, open]);
+  }, [settings, open, session?.user?.name]);
 
   const handleUpdate = (updates: Partial<UserSettingsUpdate>) => {
     setFormData((prev) => ({ ...prev, ...updates }));
   };
 
+  const handleProfileUpdate = (updates: { name?: string }) => {
+    setProfileData((prev) => ({ ...prev, ...updates }));
+  };
+
   const handleSave = async () => {
-    const result = await saveSettings(formData);
-    if (result.success) {
-      await refreshSession();
-      if (formData.language && formData.language !== settings?.language) {
-        router.refresh();
+    try {
+      if (isProfileChanged) {
+        await updateUserAction({ name: profileData.name?.trim() || null });
       }
-      toast.success(tDialog('toast.success'));
-      onOpenChange(false);
-    } else {
+
+      const result = await saveSettings(formData);
+      if (result.success) {
+        await refreshSession();
+        if (formData.language && formData.language !== settings?.language) {
+          router.refresh();
+        }
+        toast.success(tDialog('toast.success'));
+        onOpenChange(false);
+      } else {
+        toast.error(tDialog('toast.error'));
+      }
+    } catch {
       toast.error(tDialog('toast.error'));
     }
   };
@@ -231,11 +252,15 @@ function UserSettingsDialogContent({
             const Component = tab.component;
             return (
               <TabsContent key={tab.id} value={tab.id} className='mt-6 min-h-[420px]'>
-                <Component
-                  formData={formData}
-                  onUpdate={handleUpdate}
-                  onCloseDialog={() => handleOpenChange(false)}
-                />
+                {tab.id === 'profile' ? (
+                  <UserProfileSettings formData={profileData} onUpdate={handleProfileUpdate} />
+                ) : (
+                  <Component
+                    formData={formData}
+                    onUpdate={handleUpdate}
+                    onCloseDialog={() => handleOpenChange(false)}
+                  />
+                )}
               </TabsContent>
             );
           })}
@@ -245,7 +270,7 @@ function UserSettingsDialogContent({
           <Button variant='outline' onClick={() => handleOpenChange(false)} className='cursor-pointer'>
             {tDialog('buttons.cancel')}
           </Button>
-          <Button onClick={handleSave} disabled={isSaving || !isFormChanged} className='cursor-pointer'>
+          <Button onClick={handleSave} disabled={isSaving || !hasAnyChanges} className='cursor-pointer'>
             {isSaving ? (
               <>
                 <Loader2 className='mr-2 h-4 w-4 animate-spin' />
