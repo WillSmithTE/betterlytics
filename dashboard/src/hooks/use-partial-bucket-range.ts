@@ -9,7 +9,7 @@ export function usePartialBucketRange(
   bucketDate: number | string | Date | undefined,
   comparisonDate: number | string | Date | undefined,
 ) {
-  const { resolvedMainRange, resolvedCompareRange, granularity } = useTimeRangeContext();
+  const { resolvedMainRange, resolvedCompareRange, resolvedGranularity: granularity } = useTimeRangeContext();
 
   if (granularity !== 'week' && granularity !== 'month') {
     return { partialRange: undefined, comparePartialRange: undefined };

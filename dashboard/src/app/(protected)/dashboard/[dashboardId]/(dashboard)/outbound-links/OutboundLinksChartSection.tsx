@@ -13,7 +13,7 @@ type OutboundLinksChartSectionProps = {
 
 export default function OutboundLinksChartSection({ outboundClicksChartPromise }: OutboundLinksChartSectionProps) {
   const chartData = use(outboundClicksChartPromise);
-  const { granularity } = useTimeRangeContext();
+  const { resolvedGranularity: granularity } = useTimeRangeContext();
   const t = useTranslations('components.outboundLinks.chart');
 
   if (!chartData.data || chartData.data.length === 0) {
