@@ -87,7 +87,7 @@ export function getValidGranularityFallback(
   }
 
   const fallbackOrder: Record<GranularityRangeValues, GranularityRangeValues[]> = {
-    minute_1: ['minute_1', 'minute_15'],
+    minute_1: ['minute_1', 'minute_15', 'minute_30', 'hour', 'day', 'week', 'month'],
     minute_15: ['minute_15', 'minute_30', 'hour', 'day', 'week', 'month'],
     minute_30: ['minute_30', 'hour', 'day', 'week', 'month'],
     hour: ['hour', 'minute_30', 'minute_15', 'day', 'week', 'month'],
