@@ -22,7 +22,7 @@ export default function DevicesChartsSection({
 }: DevicesChartsSectionProps) {
   const deviceBreakdown = use(deviceBreakdownPromise);
   const deviceUsageTrend = use(deviceUsageTrendPromise);
-  const { granularity } = useTimeRangeContext();
+  const { resolvedGranularity: granularity } = useTimeRangeContext();
   const t = useTranslations('components.devices.charts');
   const { makeFilterClick } = useFilterClick({ behavior: 'replace-same-column' });
 

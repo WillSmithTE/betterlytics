@@ -127,7 +127,7 @@ export default function OverviewChartSection({
   }, [activeMetric, visitorsData, pageviewsData, sessionMetricsData]);
 
   const currentMetricConfig = useMemo(() => metricConfigs[activeMetric], [activeMetric, metricConfigs]);
-  const { granularity } = useTimeRangeContext();
+  const { resolvedGranularity: granularity } = useTimeRangeContext();
 
   const { annotations, createAnnotation, updateAnnotation, deleteAnnotation } = useChartAnnotations({
     chartId: 'overview',

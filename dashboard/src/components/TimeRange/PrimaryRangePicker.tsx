@@ -28,8 +28,8 @@ export function PrimaryRangePicker({ className = '' }: { className?: string }) {
   const actions = useImmediateTimeRange();
   const { isDemo } = useDashboardAuth();
 
-  const allowed = getAllowedGranularities(ctx.startDate, ctx.endDate);
-  const visible = getVisibleGranularities(ctx.startDate, ctx.endDate);
+  const allowed = getAllowedGranularities(ctx.resolvedMainRange.start, ctx.resolvedMainRange.end);
+  const visible = getVisibleGranularities(ctx.resolvedMainRange.start, ctx.resolvedMainRange.end);
 
   const label = useMemo(
     () => () => {
@@ -68,7 +68,7 @@ export function PrimaryRangePicker({ className = '' }: { className?: string }) {
       />
       <Separator className='my-1' />
       <GranularitySection
-        selectedGranularity={ctx.granularity}
+        selectedGranularity={ctx.resolvedGranularity}
         allowedGranularities={allowed}
         visibleGranularities={visible}
         onGranularitySelect={actions.setGranularity}

@@ -38,7 +38,7 @@ export default function InteractiveWebVitalsChartSection({
 }: InteractiveWebVitalsChartSectionProps) {
   const t = useTranslations('components.webVitals');
   const summary = use(summaryPromise);
-  const { granularity } = useTimeRangeContext();
+  const { resolvedGranularity: granularity } = useTimeRangeContext();
   const [active, setActive] = useState<CoreWebVitalName>('CLS');
   const seriesByMetric = use(seriesPromise);
 

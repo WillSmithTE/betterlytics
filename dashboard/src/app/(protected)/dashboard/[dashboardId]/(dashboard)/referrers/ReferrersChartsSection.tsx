@@ -25,7 +25,7 @@ export default function ReferrersChartsSection({
 }: ReferrersChartsSectionProps) {
   const distributionResult = use(distributionPromise);
   const trendResult = use(trendPromise);
-  const { granularity } = useTimeRangeContext();
+  const { resolvedGranularity: granularity } = useTimeRangeContext();
   const t = useTranslations('components.referrers.charts');
 
   const distributionData = distributionResult.data;
